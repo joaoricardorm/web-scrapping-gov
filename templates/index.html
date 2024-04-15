@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Resultados da Busca</title>
+	<style type="text/css">
+		body {
+			margin: 50px auto;
+			max-width: 850px;
+			background: #eee;
+			font-family: sans-serif;
+		}
+
+		hr {
+			border: 1px solid #777;
+		}
+
+		form {
+			zoom: 2;
+		}
+
+		.topo {
+			background: white;
+			padding: 20px;
+			margin: 15px 0;
+		}
+
+		.resultado {
+			border-top: 1px solid #777;
+			margin-bottom: 30px;
+			font-size: 12px;
+		}
+
+		.highlight {
+			background: yellow;
+			font-weight: bold;
+		}
+
+		#conteudo {
+			display: none;
+		}
+
+		#loading {
+			width: 256px;
+			height: 256px;
+			display: block;
+			position: fixed;
+			top: calc(50% - 125px);
+			left: calc(50% - 125px);
+			background: url("static/loading.gif") no-repeat;
+			cursor: wait;
+		}
+	</style>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+	<script type="text/javascript">
+		function loading() {
+			document.querySelector("#loading").style.display = "block";
+			document.querySelector("#conteudo").style.display = "none";
+		}
+
+		function carregou() {
+			document.querySelector("#loading").style.display = "none";
+			document.querySelector("#conteudo").style.display = "block";
+		}
+
+		window.onload = carregou
+	</script>
+</head>
+
+<body>
+
+	<div id="loading"></div>
+
+	<form method="get" onsubmit="loading();">
+		<input name="termo_busca" value='{{ request.args.get("termo_busca") }}'>
+		<input id="btn_buscar" type="submit" value="BUSCAR">
+	</form>
+
+	<div id="conteudo">
+		<p>{{variavel | safe}}</p>
+	</div>
+
+
+</body>
+
+</html>
