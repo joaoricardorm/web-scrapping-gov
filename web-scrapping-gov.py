@@ -31,11 +31,10 @@ def Normaliza_Texto(str):
     return texto
 
 
-
 def Lista_Arquivos_PDF():
     lista_arquivos = [f for f in listdir(pasta_cache) if isfile(join(pasta_cache, f))]
-    if not lista_arquivos
-        return 'NÃO EXISTE NENHUM PDF NA PASTA CACHE'
+    if not lista_arquivos:
+        return "NÃO EXISTE NENHUM PDF NA PASTA CACHE"
     return lista_arquivos
 
 
@@ -84,8 +83,13 @@ def Possui_Texto(termo_busca, filepath):
 
 
 def Principal():
-    termo_busca = request.args.get("termo_busca")
+
     lista_arquivos = Lista_Arquivos_PDF()
+    termo_busca = request.args.get("termo_busca")
+
+    if not termo_busca:
+        termo_busca = "Pesquisar..."
+        return ""
 
     print(lista_arquivos, file=sys.stderr)
 
@@ -98,9 +102,10 @@ def Principal():
 
 @app.route("/", methods=["GET", "POST"])
 def home():
+
     resultado = Principal()
 
-    return render_template("index.html", variavel=resultado)
+    return render_template("index.html", conteudo=resultado)
     # return Possui_Texto("autoriz", "teste.pdf")
 
 

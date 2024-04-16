@@ -15,14 +15,15 @@
 			border: 1px solid #777;
 		}
 
-		form {
+		#form-busca {
 			zoom: 2;
+			text-align: center;
 		}
 
 		.topo {
 			background: white;
 			padding: 20px;
-			margin: 15px 0;
+			margin: 35px 0;
 		}
 
 		.resultado {
@@ -58,11 +59,13 @@
 		function loading() {
 			document.querySelector("#loading").style.display = "block";
 			document.querySelector("#conteudo").style.display = "none";
+			document.querySelector("#btn_buscar").disabled = true;
 		}
 
 		function carregou() {
 			document.querySelector("#loading").style.display = "none";
 			document.querySelector("#conteudo").style.display = "block";
+			document.querySelector("#btn_buscar").disabled = false;
 		}
 
 		window.onload = carregou
@@ -73,13 +76,14 @@
 
 	<div id="loading"></div>
 
-	<form method="get" onsubmit="loading();">
-		<input name="termo_busca" value='{{ request.args.get("termo_busca") }}'>
+	<form id="form-busca" method="get" onsubmit="loading();">
+		<input name="termo_busca" placeholder="O que vc procura?..."
+			value='{{ request.args.get("termo_busca") or "" }}'>
 		<input id="btn_buscar" type="submit" value="BUSCAR">
 	</form>
 
 	<div id="conteudo">
-		<p>{{variavel | safe}}</p>
+		<p>{{conteudo | safe}}</p>
 	</div>
 
 
